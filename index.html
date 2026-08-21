@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alice Stream Schedule Generator</title>
+    <meta
+      name="description"
+      content="Just something to help Alice make her stream schedules more easily"
+    />
+    <link rel="stylesheet" href="assets/css/base.css?v=project-layout-50" />
+    <link rel="stylesheet" href="assets/css/ui.css?v=project-layout-50" />
+    <link rel="stylesheet" href="assets/css/preview.css?v=project-layout-50" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="preview-panel" aria-label="Schedule preview">
+        <div class="preview-toolbar">
+          <div>
+            <p class="eyebrow">stream schedule generator</p>
+            <h1>@VTalice</h1>
+          </div>
+          <div class="actions">
+            <button id="copyPng" type="button">Copy as PNG</button>
+            <button id="downloadPng" type="button">Export as PNG</button>
+          </div>
+        </div>
+        <div class="preview-frame">
+          <div id="previewViewport" class="canvas-wrap">
+            <div id="previewStage">
+              <svg
+                id="scheduleSvg"
+                viewBox="0 0 1920 1080"
+                role="img"
+                aria-labelledby="scheduleTitle scheduleDesc"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title id="scheduleTitle">Weekly Twitch stream schedule</title>
+                <desc id="scheduleDesc">
+                  Editable weekly schedule graphic for Twitch streams.
+                </desc>
+                <defs>
+                  <style>
+                    .svg-title {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 62px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #eef6ff;
+                    }
+                    .svg-label {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 25px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #eef6ff;
+                    }
+                    .svg-small {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 16px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #dfe9ff;
+                    }
+                    .svg-stream-title {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 16px;
+                      font-weight: 400;
+                      letter-spacing: 0.2em;
+                      fill: #dfe9ff;
+                    }
+                    .svg-credit {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 15px;
+                      font-weight: 400;
+                      letter-spacing: 0.2em;
+                      fill: #eef6ff;
+                      opacity: 0.55;
+                    }
+                    .svg-micro {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 12px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #eef6ff;
+                    }
+                    .svg-month {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 12px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #4b4489;
+                    }
+                    .svg-day {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 18px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #eef6ff;
+                    }
+                    .svg-date {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 15px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #eef6ff;
+                    }
+                    .svg-body {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 18px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #f7fbff;
+                    }
+                    .svg-script {
+                      font-family: "Arimo", Arial, sans-serif;
+                      font-size: 48px;
+                      font-weight: 400;
+                      letter-spacing: 0;
+                      fill: #eef6ff;
+                    }
+                  </style>
+                </defs>
+                <g id="backgroundLayer">
+                  <image
+                    data-export-embed="true"
+                    href="assets/images/schedule-base.png"
+                    x="0"
+                    y="0"
+                    width="1920"
+                    height="1080"
+                    preserveAspectRatio="none"
+                  />
+                </g>
+                <g id="scheduleLayer">
+                  <g id="headerLayer">
+                    <text
+                      id="weekStart"
+                      x="1168"
+                      y="110"
+                      class="svg-title"
+                      text-anchor="middle"
+                    >
+                      17
+                    </text>
+                    <text
+                      id="weekEnd"
+                      x="1310"
+                      y="110"
+                      class="svg-title"
+                      text-anchor="middle"
+                    >
+                      23
+                    </text>
+                    <text
+                      id="monthStart"
+                      x="1168"
+                      y="145"
+                      class="svg-month"
+                      text-anchor="middle"
+                      transform="rotate(-7 1168 145)"
+                    >
+                      aug
+                    </text>
+                    <text
+                      id="monthEnd"
+                      x="1310"
+                      y="145"
+                      class="svg-month"
+                      text-anchor="middle"
+                      transform="rotate(7 1310 145)"
+                    >
+                      aug
+                    </text>
+                  </g>
+                  <g id="daysLayer"></g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="preview-zoom-controls" aria-label="Preview zoom controls">
+            <button
+              id="zoomOut"
+              class="zoom-control"
+              type="button"
+              aria-label="Zoom out"
+              title="Zoom out"
+            >
+              -
+            </button>
+            <button
+              id="zoomReset"
+              class="zoom-control"
+              type="button"
+              aria-label="Reset preview zoom"
+              title="Reset preview zoom"
+            >
+              ↺
+            </button>
+            <button
+              id="zoomIn"
+              class="zoom-control"
+              type="button"
+              aria-label="Zoom in"
+              title="Zoom in"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="editor-panel" aria-label="Schedule editor">
+        <form id="scheduleForm">
+          <div class="editor-group">
+            <h2>Week</h2>
+            <div class="field-grid two">
+              <label
+                >Start date
+                <input name="startDate" type="date" value="2026-08-17"
+              /></label>
+              <label
+                >End date <input name="endDate" type="date" value="2026-08-23"
+              /></label>
+            </div>
+          </div>
+
+          <div class="editor-group days-editor">
+            <h2>Schedule</h2>
+            <div id="dayEditors"></div>
+          </div>
+        </form>
+      </section>
+    </main>
+    <button
+      id="scrollTop"
+      class="scroll-top"
+      type="button"
+      aria-label="Scroll to top"
+      title="Scroll to top"
+    >
+      ↑
+    </button>
+    <script src="app.js?v=project-cleanup-49"></script>
+  </body>
+</html>

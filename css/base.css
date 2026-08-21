@@ -1,0 +1,74 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0c12;
+  --panel: #15161e;
+  --panel-soft: #1a1b22;
+  --field: #1a1d2a;
+  --ink: #f3efff;
+  --muted: #aaaab9;
+  --line: #3d4050;
+  --accent: #72b9f2;
+  --accent-2: #e17fc0;
+  --rest: #bbcaff;
+  --focus: #fff09a;
+  --day-title: #c4b8f5;
+  --day-title-open: #8fc8f8;
+}
+
+@font-face {
+  font-family: Arimo;
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/arimo-regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: Arimo;
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/arimo-bold.ttf") format("truetype");
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+body,
+button,
+input {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1040px);
+  justify-content: center;
+  gap: 16px;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+@media (max-width: 680px) {
+  .app-shell {
+    gap: 12px;
+    padding: 12px;
+  }
+}

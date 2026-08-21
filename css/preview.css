@@ -1,0 +1,64 @@
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.preview-frame {
+  position: relative;
+}
+.canvas-wrap {
+  min-height: 0;
+  overflow: auto;
+  aspect-ratio: 1.748 / 1;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: #101116;
+  padding: 10px;
+}
+.canvas-wrap.is-panning {
+  cursor: grabbing;
+}
+#previewStage {
+  width: 100%;
+  min-width: 100%;
+}
+#scheduleSvg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+  box-shadow: none;
+}
+.preview-zoom-controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+}
+.zoom-control {
+  display: grid;
+  width: 38px;
+  min-height: 38px;
+  place-items: center;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+@media (max-width: 680px) {
+  .canvas-wrap {
+    margin-inline: 0;
+    padding: 10px;
+  }
+  .preview-zoom-controls {
+    top: 10px;
+    right: 10px;
+  }
+}
